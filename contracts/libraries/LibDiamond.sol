@@ -1,17 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-/******************************************************************************\
-* Author: Nick Mudge <nick@perfectabstractions.com> (https://twitter.com/mudgen)
-* EIP-2535 Diamonds: https://eips.ethereum.org/EIPS/eip-2535
-/******************************************************************************/
-import { IDiamondCut } from "../interfaces/IDiamondCut.sol";
+import { iDiamondCut } from "../interfaces/iDiamondCut.sol";
 
 // Remember to add the loupe functions from DiamondLoupeFacet to the diamond.
 // The loupe functions are required by the EIP2535 Diamonds standard
 
 error InitializationFunctionReverted(address _initializationContractAddress, bytes _calldata);
-
+/**
+ * @dev EIP-2535 Diamond Cut Facet
+ */
 library LibDiamond {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
@@ -56,7 +54,7 @@ library LibDiamond {
         require(msg.sender == diamondStorage().contractOwner, "LibDiamond: Must be contract owner");
     }
 
-    event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
+    event DiamondCut(iDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
     bytes32 constant CLEAR_ADDRESS_MASK = bytes32(uint256(0xffffffffffffffffffffffff));
     bytes32 constant CLEAR_SELECTOR_MASK = bytes32(uint256(0xffffffff << 224));
@@ -68,7 +66,7 @@ library LibDiamond {
     // The code is duplicated to prevent copying calldata to memory which
     // causes an error for a two dimensional array.
     function diamondCut(
-        IDiamondCut.FacetCut[] memory _diamondCut,
+        iDiamondCut.FacetCut[] memory _diamondCut,
         address _init,
         bytes memory _calldata
     ) internal {
@@ -114,12 +112,12 @@ library LibDiamond {
         uint256 _selectorCount,
         bytes32 _selectorSlot,
         address _newFacetAddress,
-        IDiamondCut.FacetCutAction _action,
+        iDiamondCut.FacetCutAction _action,
         bytes4[] memory _selectors
     ) internal returns (uint256, bytes32) {
         DiamondStorage storage ds = diamondStorage();
         require(_selectors.length > 0, "LibDiamondCut: No selectors in facet to cut");
-        if (_action == IDiamondCut.FacetCutAction.Add) {
+        if (_action == iDiamondCut.FacetCutAction.Add) {
             enforceHasContractCode(_newFacetAddress, "LibDiamondCut: Add facet has no code");
             for (uint256 selectorIndex; selectorIndex < _selectors.length; ) {
                 bytes4 selector = _selectors[selectorIndex];
@@ -144,7 +142,7 @@ library LibDiamond {
                     selectorIndex++;
                 }
             }
-        } else if (_action == IDiamondCut.FacetCutAction.Replace) {
+        } else if (_action == iDiamondCut.FacetCutAction.Replace) {
             enforceHasContractCode(_newFacetAddress, "LibDiamondCut: Replace facet has no code");
             for (uint256 selectorIndex; selectorIndex < _selectors.length; ) {
                 bytes4 selector = _selectors[selectorIndex];
@@ -161,7 +159,7 @@ library LibDiamond {
                     selectorIndex++;
                 }
             }
-        } else if (_action == IDiamondCut.FacetCutAction.Remove) {
+        } else if (_action == iDiamondCut.FacetCutAction.Remove) {
             require(_newFacetAddress == address(0), "LibDiamondCut: Remove facet address must be address(0)");
             // "_selectorCount >> 3" is a gas efficient division by 8 "_selectorCount / 8"
             uint256 selectorSlotCount = _selectorCount >> 3;
