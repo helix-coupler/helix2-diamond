@@ -2,7 +2,7 @@
 
 This is a gas-optimized reference implementation for [EIP-2535 Diamonds](https://github.com/ethereum/EIPs/issues/2535). To learn about other implementations go here: https://github.com/mudgen/diamond
 
-This implementation uses Hardhat and Solidity 0.8.*
+This implementation uses Hardhat and Solidity `0.8.*`
 
 Specifically this is a gas efficient implementation of the `diamondCut` function. Adding/replacing/removing is optimized to take the least gas.
 

@@ -24,8 +24,8 @@ contract Diamond {
         LibDiamond.diamondCut(cut, address(0), "");        
     }
 
-    // Find facet for function that is called and execute the
-    // function if a facet is found and return any value.
+    /// @dev : Find facet for function that is called and execute
+    /// the function if a facet is found and return any value.
     fallback() external payable {
         LibDiamond.DiamondStorage storage ds;
         bytes32 position = LibDiamond.DIAMOND_STORAGE_POSITION;
@@ -36,7 +36,7 @@ contract Diamond {
         // get facet from function selector
         address facet = address(bytes20(ds.facets[msg.sig]));
         require(facet != address(0), "Diamond: Function does not exist");
-        // Execute external function from facet using delegatecall and return any value.
+        // execute external function from facet using delegatecall and return any value.
         assembly {
             // copy function selector and any arguments
             calldatacopy(0, 0, calldatasize())
