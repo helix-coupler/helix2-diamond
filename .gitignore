@@ -1,5 +1,15 @@
 node_modules
 
+#Foundry files
+cache/
+.env*
+!.env.example
+*/.DS_store
+.DS_store
+broadcast/*/*/*
+!broadcast/*/*/run-latest.json
+out
+
 #Hardhat files
 cache
 artifacts

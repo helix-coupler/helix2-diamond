@@ -1,3 +1,21 @@
+# Helix2 Diamond
+
+## [Install Foundry](https://getfoundry.sh/)
+
+`cd ./contracts && curl -L https://foundry.paradigm.xyz | bash && source ~/.bashrc && foundryup`
+
+## Install dependency (optional)
+
+`forge install foundry-rs/forge-std`
+
+`forge install memester-xyz/surl`
+
+## Goerli Testnet
+
+Goerli testing: `./test/goerli.sh`
+
+---
+
 # Diamond-2-Hardhat Implementation
 
 This is a gas-optimized reference implementation for [EIP-2535 Diamonds](https://github.com/ethereum/EIPs/issues/2535). To learn about other implementations go here: https://github.com/mudgen/diamond
