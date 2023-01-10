@@ -49,11 +49,7 @@ library LibDiamond {
     bytes32 constant CLEAR_SELECTOR_MASK = bytes32(uint256(0xffffffff << 224));
 
     /// @dev : Internal function version of diamondCut
-    function diamondCut(
-        iDiamondCut.FacetCut[] memory _diamondCut,
-        address _init,
-        bytes memory _calldata
-    ) internal {
+    function diamondCut(iDiamondCut.FacetCut[] memory _diamondCut, address _init, bytes memory _calldata) internal {
         DiamondStorage storage ds = diamondStorage();
         uint256 originalSelectorCount = ds.selectorCount;
         uint256 selectorCount = originalSelectorCount;

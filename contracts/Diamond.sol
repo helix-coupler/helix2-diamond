@@ -1,27 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { LibDiamond } from "./libraries/LibDiamond.sol";
-import { iDiamondCut } from "./interfaces/iDiamondCut.sol";
+import {LibDiamond} from "./libraries/LibDiamond.sol";
+import {iDiamondCut} from "./interfaces/iDiamondCut.sol";
 
 /**
  * @dev EIP-2535 Diamond
  */
-contract Diamond {    
-
-    constructor(address _contractOwner, address _diamondCutFacet) payable {        
+contract Diamond {
+    constructor(address _contractOwner, address _diamondCutFacet) payable {
         LibDiamond.setContractOwner(_contractOwner);
 
         // Add the diamondCut external function from the diamondCutFacet
         iDiamondCut.FacetCut[] memory cut = new iDiamondCut.FacetCut[](1);
         bytes4[] memory functionSelectors = new bytes4[](1);
         functionSelectors[0] = iDiamondCut.diamondCut.selector;
-        cut[0] = iDiamondCut.FacetCut({
-            facetAddress: _diamondCutFacet, 
-            action: iDiamondCut.FacetCutAction.Add, 
-            functionSelectors: functionSelectors
-        });
-        LibDiamond.diamondCut(cut, address(0), "");        
+        cut[0] = iDiamondCut.FacetCut({facetAddress: _diamondCutFacet, action: iDiamondCut.FacetCutAction.Add, functionSelectors: functionSelectors});
+        LibDiamond.diamondCut(cut, address(0), "");
     }
 
     /// @dev : Find facet for function that is called and execute
@@ -46,12 +41,12 @@ contract Diamond {
             returndatacopy(0, 0, returndatasize())
             // return any return value or error back to the caller
             switch result
-                case 0 {
-                    revert(0, returndatasize())
-                }
-                default {
-                    return(0, returndatasize())
-                }
+            case 0 {
+                revert(0, returndatasize())
+            }
+            default {
+                return(0, returndatasize())
+            }
         }
     }
 
