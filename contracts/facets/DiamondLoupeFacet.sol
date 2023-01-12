@@ -3,12 +3,11 @@ pragma solidity ^0.8.0;
 
 import {LibDiamond} from "../libraries/LibDiamond.sol";
 import {iDiamondLoupe} from "../interfaces/iDiamondLoupe.sol";
-import {iERC165} from "../interfaces/iERC165.sol";
 
 /**
  * @dev EIP-2535 Diamond Loupe Facet and Loupe Functions
  */
-contract DiamondLoupeFacet is iDiamondLoupe, iERC165 {
+contract DiamondLoupeFacet is iDiamondLoupe {
     /// @dev gets all facets and their selectors.
     /// @return facets_ Facet
     function facets() external view override returns (Facet[] memory facets_) {
@@ -139,11 +138,5 @@ contract DiamondLoupeFacet is iDiamondLoupe, iERC165 {
     function facetAddress(bytes4 _functionSelector) external view override returns (address facetAddress_) {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         facetAddress_ = address(bytes20(ds.facets[_functionSelector]));
-    }
-
-    // This implements ERC-165.
-    function supportsInterface(bytes4 _interfaceId) external view override returns (bool) {
-        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
-        return ds.supportedInterfaces[_interfaceId];
     }
 }

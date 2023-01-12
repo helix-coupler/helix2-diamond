@@ -14,7 +14,7 @@ const { assert } = require('chai')
 // things, and have a fresh row to work with.
 describe('Cache bug test', async () => {
   let diamondLoupeFacet
-  let test1Facet
+  let viewFacet
   const ownerSel = '0x8da5cb5b'
 
   const sel0 = '0x19e3b533' // fills up slot 1
@@ -50,14 +50,14 @@ describe('Cache bug test', async () => {
     let diamondAddress = await deployDiamond()
     let diamondCutFacet = await ethers.getContractAt('DiamondCutFacet', diamondAddress)
     diamondLoupeFacet = await ethers.getContractAt('DiamondLoupeFacet', diamondAddress)
-    const Test1Facet = await ethers.getContractFactory('Test1Facet')
-    test1Facet = await Test1Facet.deploy()
-    await test1Facet.deployed()
+    const ViewFacet = await ethers.getContractFactory('ViewFacet')
+    viewFacet = await ViewFacet.deploy()
+    await viewFacet.deployed()
 
     // add functions
     tx = await diamondCutFacet.diamondCut([
       {
-        facetAddress: test1Facet.address,
+        facetAddress: viewFacet.address,
         action: FacetCutAction.Add,
         functionSelectors: selectors
       }
@@ -88,8 +88,8 @@ describe('Cache bug test', async () => {
   })
 
   it('should not exhibit the cache bug', async () => {
-    // Get the test1Facet's registered functions
-    let selectors = await diamondLoupeFacet.facetFunctionSelectors(test1Facet.address)
+    // Get the viewFacet's registered functions
+    let selectors = await diamondLoupeFacet.facetFunctionSelectors(viewFacet.address)
 
     // Check individual correctness
     assert.isTrue(selectors.includes(sel0), 'Does not contain sel0')

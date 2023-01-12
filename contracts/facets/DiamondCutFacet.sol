@@ -15,7 +15,7 @@ contract DiamondCutFacet is iDiamondCut {
     /// @param _calldata function call, including function selector and arguments
     ///                  _calldata is executed with delegatecall on _init
     function diamondCut(FacetCut[] calldata _diamondCut, address _init, bytes calldata _calldata) external override {
-        LibDiamond.enforceIsContractOwner();
+        LibDiamond.onlyDev();
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         uint256 originalSelectorCount = ds.selectorCount;
         uint256 selectorCount = originalSelectorCount;

@@ -8,8 +8,8 @@ import {iDiamondCut} from "./interfaces/iDiamondCut.sol";
  * @dev EIP-2535 Diamond
  */
 contract Diamond {
-    constructor(address _contractOwner, address _diamondCutFacet) payable {
-        LibDiamond.setContractOwner(_contractOwner);
+    constructor(address _Dev, address _diamondCutFacet) payable {
+        LibDiamond.setDev(_Dev);
 
         // Add the diamondCut external function from the diamondCutFacet
         iDiamondCut.FacetCut[] memory cut = new iDiamondCut.FacetCut[](1);
@@ -30,7 +30,7 @@ contract Diamond {
         }
         // get facet from function selector
         address facet = address(bytes20(ds.facets[msg.sig]));
-        require(facet != address(0), "Diamond: Function does not exist");
+        require(facet != address(0), "FUNCTION_NOT_FOUND");
         // execute external function from facet using delegatecall and return any value.
         assembly {
             // copy function selector and any arguments
