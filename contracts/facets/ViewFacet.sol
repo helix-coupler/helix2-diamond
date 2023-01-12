@@ -8,7 +8,6 @@ import "../interfaces/iHelix2.sol";
  * @dev Helix2 Core View Facet
  */
 contract ViewFacet {
-
     function getIllegalBlocks() public view returns (string[4] memory) {
         return LibDiamond.illegalBlocks();
     }

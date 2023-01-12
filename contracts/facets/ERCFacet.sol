@@ -19,7 +19,7 @@ contract ERCFacet is iERC173, iERC165 {
         return LibDiamond.Dev();
     }
 
-    /// @dev ERC-165 
+    /// @dev ERC-165
     function supportsInterface(bytes4 sig) external view override returns (bool) {
         return LibDiamond.checkInterface(sig);
     }

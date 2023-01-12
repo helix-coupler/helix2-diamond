@@ -5,12 +5,12 @@ pragma solidity ^0.8.0;
  * @dev EIP-2535 Diamond Cut Interface
  */
 interface iDiamondCut {
+    // Add=0, Replace=1, Remove=2
     enum FacetCutAction {
         Add,
         Replace,
         Remove
     }
-    // Add=0, Replace=1, Remove=2
 
     struct FacetCut {
         address facetAddress;

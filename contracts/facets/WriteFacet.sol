@@ -8,7 +8,6 @@ import "../interfaces/iHelix2.sol";
  * @dev Helix2 Core View Facet
  */
 contract WriteFacet {
-
     function setLives(uint256[4] calldata _newLives) external {
         LibDiamond.setLives(_newLives);
     }
