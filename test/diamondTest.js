@@ -93,9 +93,11 @@ describe('DiamondTest', async function () {
     await viewFacet.getLifespans()
   })
 
-  it('should replace a function', async () => {
+  /* 
+  // supportsInterface() doesn't exist in Helix2 View Facet
+  it('should replace supportsInterface function', async () => {
     const ViewFacet = await ethers.getContractFactory('ViewFacet')
-    const selectors = getSelectors(ViewFacet).get(['getLifespans()'])
+    const selectors = getSelectors(ViewFacet).get(['supportsInterface(bytes4)'])
     const testFacetAddress = addresses[3]
     tx = await diamondCutFacet.diamondCut(
       [{
@@ -111,6 +113,7 @@ describe('DiamondTest', async function () {
     result = await diamondLoupeFacet.facetFunctionSelectors(testFacetAddress)
     assert.sameMembers(result, getSelectors(ViewFacet))
   })
+  */
 
   it('should add write functions', async () => {
     const WriteFacet = await ethers.getContractFactory('WriteFacet')

@@ -271,7 +271,7 @@ library LibDiamond {
                 /// @notice : useful for immutable functions only
                 /// disabled since Helix2 doesn't have immutable functions
                 /// this allows replacing a function with itself
-                //require(oldFacetAddress != _newFacetAddress, "DUPLICATE_FUNCTION");
+                require(oldFacetAddress != _newFacetAddress, "DUPLICATE_FUNCTION");
                 require(oldFacetAddress != address(0), "NOT_FOUND");
                 // replace old facet address
                 ds.facets[selector] = (oldFacet & CLEAR_ADDRESS_MASK) | bytes20(_newFacetAddress);
